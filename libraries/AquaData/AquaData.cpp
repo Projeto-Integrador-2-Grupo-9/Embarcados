@@ -7,7 +7,7 @@
 #include "DFRobot_EC.h"
 #include "jsn_sr04t.h"
 
-#define NUM_SENSORS 4 
+#define NUM_SENSORS 4
 
 extern DS18B20 temperatureSensor;
 extern DTH_Turbidity turbiditySensor;
@@ -27,6 +27,14 @@ void AquaData::init_sensors()
 {
     init_gpio();
     init_i2c();
+}
+
+void AquaData::calibrate_sensors()
+{
+    float temperature = temperatureSensor.get_temperature();
+    ecSensor.calibration(this->voltage, temperature);
+    phSensor.calibration(this->voltage, temperature);
+    calibrate_all_sensors();
 }
 
 void AquaData::load_data()

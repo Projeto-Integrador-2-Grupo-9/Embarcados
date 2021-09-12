@@ -6,8 +6,9 @@ class AquaData
 public:
     AquaData();
     ~AquaData();
-    void load_data();
     void init_sensors();
+    void calibrate_sensors();
+    void load_data();
 
     float voltage = 0.f;
 
