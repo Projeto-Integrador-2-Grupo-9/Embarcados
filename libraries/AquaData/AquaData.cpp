@@ -6,6 +6,7 @@
 #include "DFRobot_ESP_PH.h"
 #include "DFRobot_EC.h"
 #include "jsn_sr04t.h"
+#include "Arduino.h"
 
 #define NUM_SENSORS 4
 
@@ -31,19 +32,25 @@ void AquaData::init_sensors()
 
 void AquaData::calibrate_sensors()
 {
+    float voltagePH = analogRead(PH_PIN)/1024.0*5000;
+    float voltageEC = analogRead(EC_PIN)/1024.0*5000;
     float temperature = temperatureSensor.get_temperature();
-    ecSensor.calibration(this->voltage, temperature);
-    phSensor.calibration(this->voltage, temperature);
+
+    ecSensor.calibration(voltageEC, temperature);
+    phSensor.calibration(voltagePH, temperature);
     calibrate_all_sensors();
 }
 
 void AquaData::load_data()
 {
+    float voltagePH = analogRead(PH_PIN)/1024.0*5000;
+    float voltageEC = analogRead(EC_PIN)/1024.0*5000;
+
     this->temperature = temperatureSensor.get_temperature();
-    this->conductivity = ecSensor.readEC(this->voltage, this->temperature);
-    this->ph = phSensor.readPH(this->voltage, this->temperature);
+    this->conductivity = ecSensor.readEC(voltageEC, this->temperature);
+    this->ph = phSensor.readPH(voltagePH, this->temperature);
     this->oxygen = oxygenSensor.ReadOxygenData(Oxygen_IICAddress);
     this->turbidity = turbiditySensor.readTurbidity();
-    for (uint8_t i = 1; i <= NUM_SENSORS; i++)
+    for (int i = 1; i <= NUM_SENSORS; i++)
         this->proximity[i] = get_distance(i);
 }

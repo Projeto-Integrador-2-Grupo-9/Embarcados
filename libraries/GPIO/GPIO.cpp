@@ -11,9 +11,6 @@ DS18B20 temperatureSensor;
 DFRobot_ESP_PH phSensor;
 DFRobot_EC ecSensor;
 
-#define TURBIDITY_SENSOR_PIN A0
-#define TEMPERATURE_SENSOR 15
-
 void ec_sensor_init()
 {
     ecSensor.begin();

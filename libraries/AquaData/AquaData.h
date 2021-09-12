@@ -10,8 +10,6 @@ public:
     void calibrate_sensors();
     void load_data();
 
-    float voltage = 0.f;
-
 private:
     float temperature = 0.f;
     float conductivity = 0.f;
