@@ -1,10 +1,10 @@
 #include "I2C.h"
 #include <Arduino.h>
 
-DFRobot_OxygenSensor Oxygen;
+DFRobot_OxygenSensor oxygenSensor;
 
 void oxygen_sensor_init() {
-  while(!Oxygen.begin(Oxygen_IICAddress)) {
+  while(!oxygenSensor.begin(Oxygen_IICAddress)) {
     delay(1000);
   }
 }

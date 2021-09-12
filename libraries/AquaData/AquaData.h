@@ -9,6 +9,8 @@ public:
     void load_data();
     void init_sensors();
 
+    float voltage = 0.f;
+
 private:
     float temperature = 0.f;
     float conductivity = 0.f;
