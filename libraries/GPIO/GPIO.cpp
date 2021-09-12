@@ -1,18 +1,7 @@
 #include "GPIO.h"
-#include <DS18B20.h>
-#include "DTH_Turbidity.h"
-#include "DFRobot_ESP_PH.h"
-#include "EEPROM.h"
-#include "DFRobot_EC.h"
-#include "jsn_sr04t.h"
 
 #define TURBIDITY_SENSOR_PIN A0
 #define TEMPERATURE_SENSOR 15
-
-DTH_Turbidity turbSensor(TURBIDITY_SENSOR_PIN);
-DS18B20 temperature;
-DFRobot_ESP_PH ph;
-DFRobot_EC ec;
 
 void ec_sensor_init()
 {
@@ -32,10 +21,10 @@ void turbidity_sensor_init()
 
 void temperature_sensor_init()
 {
-    temperature.begin(TEMPERATURE_SENSOR);
+    temperatureSensor.begin(TEMPERATURE_SENSOR);
 }
 
-void gpio_init_2()
+void init_gpio()
 {
     temperature_sensor_init();
     turbidity_sensor_init();

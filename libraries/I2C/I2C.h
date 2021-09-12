@@ -9,6 +9,6 @@
 #define Oxygen_IICAddress ADDRESS_3
 
 
-void icc_init();
+void init_i2c();
 
 #endif /* I2C_H */

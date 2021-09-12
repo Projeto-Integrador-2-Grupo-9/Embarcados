@@ -9,6 +9,6 @@ void oxygen_sensor_init() {
   }
 }
 
-void icc_init() {
+void init_i2c() {
     oxygen_sensor_init();
 }
