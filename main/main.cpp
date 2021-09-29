@@ -1,14 +1,12 @@
-
+#include <stdio.h>
 #include "AquaData.h"
 
-void setup()
-{
-}
-
-void loop()
+extern "C" void app_main()
 {
     AquaData aquaData;
     aquaData.init_sensors();
     aquaData.calibrate_sensors();
     aquaData.load_data();
+    printf("Olá mundo!");
+    fflush(stdout);
 }

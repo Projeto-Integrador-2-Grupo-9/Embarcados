@@ -1,6 +1,7 @@
 .config
 *.o
 *.pyc
+components/
 
 # gtags
 GTAGS
