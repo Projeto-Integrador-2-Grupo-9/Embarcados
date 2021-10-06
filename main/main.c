@@ -18,21 +18,25 @@
 
 #include "nvs.h"
 #include "wifi.h"
+#include "mqtt.h"
+#include "data.h"
 
 /****************************************************************************/
 /*!                              Macros                                     */
 
-// #define SECOND 1000000
+#define SECOND 1000000
 
 /****************************************************************************/
 /*!                        Global Statements                                */
 
 xSemaphoreHandle wifiSemaphore = NULL;
-// xSemaphoreHandle mqttSemaphore = NULL;
+xSemaphoreHandle mqttSemaphore = NULL;
 
-// AquaData aquaData;
+DeviceData device_data = {0};
 
-// extern esp_mqtt_client_handle_t client; 
+int id = -1;
+
+extern esp_mqtt_client_handle_t client; 
 
 /****************************************************************************/
 /*!                         Functions                                       */
@@ -43,22 +47,19 @@ xSemaphoreHandle wifiSemaphore = NULL;
 void app_main(void)
 {
     nvs_init();
-
-    // aquaData.init_sensors();
-    // aquaData.calibrate_sensors();
-    // aquaData.load_data();
+    nvs_get_data();
 
     wifiSemaphore = xSemaphoreCreateBinary();
-    // mqttSemaphore = xSemaphoreCreateBinary();
+    mqttSemaphore = xSemaphoreCreateBinary();
 
     wifi_init();
 
-    // esp_sleep_enable_timer_wakeup(30 * SECOND);
+    esp_sleep_enable_timer_wakeup(30 * SECOND);
 
-    // xTaskCreate(&sendSensorData, "Send Sensor Data", 4096, NULL, 1, NULL);
+    xTaskCreate(&sendSensorData, "Send Sensor Data", 4096, NULL, 1, NULL);
 
-    // if (xSemaphoreTake(wifiSemaphore, portMAX_DELAY))
-    // {
-    //     mqtt_start();
-    // }
+    if (xSemaphoreTake(wifiSemaphore, portMAX_DELAY))
+    {
+        mqtt_start();
+    }
 }
