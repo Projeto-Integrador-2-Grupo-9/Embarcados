@@ -36,7 +36,7 @@ DeviceData device_data = {0};
 
 int id = -1;
 
-extern esp_mqtt_client_handle_t client; 
+extern esp_mqtt_client_handle_t client;
 
 /****************************************************************************/
 /*!                         Functions                                       */
@@ -46,20 +46,30 @@ extern esp_mqtt_client_handle_t client;
   */
 void app_main(void)
 {
-    nvs_init();
-    nvs_get_data();
+  device_data.temperature = 0.f;
+  device_data.conductivity = 0.f;
+  device_data.ph = 0.f;
+  device_data.oxygen = 0.f;
+  device_data.turbidity = 0.f;
+  device_data.lat = -15.8310f;
+  device_data.lng = -47.8460f;
 
-    wifiSemaphore = xSemaphoreCreateBinary();
-    mqttSemaphore = xSemaphoreCreateBinary();
+  nvs_init();
+  nvs_get_data();
 
-    wifi_init();
+  wifiSemaphore = xSemaphoreCreateBinary();
+  mqttSemaphore = xSemaphoreCreateBinary();
 
-    esp_sleep_enable_timer_wakeup(30 * SECOND);
+  wifi_init();
 
-    xTaskCreate(&sendSensorData, "Send Sensor Data", 4096, NULL, 1, NULL);
+  esp_sleep_enable_timer_wakeup(30 * SECOND);
 
-    if (xSemaphoreTake(wifiSemaphore, portMAX_DELAY))
-    {
-        mqtt_start();
-    }
+  xTaskCreate(&sendSensorData, "Send Sensor Data", 4096, NULL, 1, NULL);
+
+  xTaskCreate(&sendPosition, "Send Position", 4096, NULL, 1, NULL);
+
+  if (xSemaphoreTake(wifiSemaphore, portMAX_DELAY))
+  {
+    mqtt_start();
+  }
 }

@@ -51,10 +51,6 @@ void parser(char * buffer)
         if (status_json)
         {
             int status = status_json->valueint;
-            if (status != device_data.device_status)
-            {
-                // set_device_status(status);
-            }
         }
     }
     cJSON_Delete(json);

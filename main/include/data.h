@@ -5,9 +5,13 @@
 /*!                            Structs                                      */
 typedef struct DeviceData
 {
-    int device_status;
-    int temperature;
-    int humidity;
+    float temperature;
+    float conductivity;
+    float ph;
+    float oxygen;
+    float turbidity;
+    float lat;
+    float lng;
 } DeviceData;
 
 /****************************************************************************/

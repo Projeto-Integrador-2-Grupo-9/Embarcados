@@ -26,8 +26,8 @@ void mqtt_send_message(char * topic, char * message);
 void sendSensorData(void *params);
 
 /*!
- *  @brief Function used to update device status
+ *  @brief Function used to update device position
  */
-void sendDeviceStatus(void);
+void sendPosition(void *params);
 
 #endif
